@@ -83,11 +83,13 @@ This project sits at the intersection of:
 
 ## 📚 References
 Key literature supporting this work includes:  
+- Y. Wang et al., *Rep. Prog. Phys.* 83, 024401 (2020)  
+- A. Ullah et al., *Front. Phys.* 11, 1223973 (2023)
+- H. Yi-Te et al., *Com. Phys.* 10.1038 (2023)
 - H.-P. Breuer et al., *Rev. Mod. Phys.* 88, 021001 (2016)  
 - A. Rivas et al., *J. Phys. A* 50, 303001 (2017)  
 - J. Cai et al., *Nat. Commun.* 9, 1 (2018)  
-- Y. Wang et al., *Rep. Prog. Phys.* 83, 024401 (2020)  
-- A. Ullah et al., *Front. Phys.* 11, 1223973 (2023)  
+  
 
 ---
 
