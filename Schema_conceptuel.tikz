@@ -1,0 +1,54 @@
+% Définition des styles pour le diagramme
+\tikzstyle{block} = [rectangle, draw, fill=blue!20,
+    text width=11em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{io} = [rectangle, draw, fill=green!20,
+    text width=9em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{result} = [rectangle, draw, fill=orange!30,
+    text width=11em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+
+\begin{tikzpicture}[
+    node distance=1cm and 1.5cm,
+    auto,
+    every node/.style={align=center},
+    block/.append style={font=\footnotesize},
+    io/.append style={font=\footnotesize},
+    result/.append style={font=\footnotesize}
+]
+    % Placement des nœuds avec une grille plus régulière
+    \node [io] (inputs) {Données d'Entrée \\ (Spectres, Données Agricoles)};
+    \node [block, right=of inputs] (abinitio) {1. Calculs \textit{ab initio} \\ (ORCA, CP2K)};
+    \node [block, right=of abinitio] (param) {2. Paramétrisation \\ Hamiltonien \& Bain};
+
+    \node [block, below=of inputs] (exp) {6. Validation Expérimentale};
+    \node [block, below=of abinitio] (obs) {4. Calcul des Observables \\ (PCE, ETR, Spectres)};
+    \node [block, below=of param] (simu) {3. Simulation de la Dynamique Quantique \\ (Process Tensor-HOPS)};
+
+    \node [block, below=of obs] (ml) {5. Criblage \& Optimisation par IA};
+    \node [result, below=of ml] (design) {Finalité : Conception de Nouveaux Matériaux};
+
+    % Tracé des flèches principales du flux de travail (plus fluides)
+    \path [line] (inputs) -- (abinitio);
+    \path [line] (abinitio) -- (param);
+    \path [line] (param) -- (simu);
+    \path [line] (simu) -- (obs);
+    \path [line] (obs) -- (ml);
+    \path [line] (ml) -- (design);
+
+    % Boucle de validation expérimentale (ajustée pour éviter chevauchements)
+    \path [line] (inputs.south) -- ++(0,-0.5cm) -| (exp.north);
+    \path [line] (obs.south west) -- ++(-0.5cm,0) |- (exp.south east);
+
+    % Boucles de rétroaction et d'optimisation (améliorées avec courbure et labels)
+    \path [line, dashed, thick, blue] (exp.north east)
+        edge[bend right=0] node[above, sloped, font=\footnotesize] {Raffinement} (abinitio.south west);
+    \path [line, dashed, thick, red] (ml.east)
+        -- ++(1cm,0)
+        edge[bend left=0] node[above, sloped, font=\footnotesize] {Apprentissage Actif} (param.south west);
+    \path [line, dashed, thick, purple] (abinitio.south)
+        -- ++(0,-0.5cm)
+        edge[bend right=75] node[above, sloped, font=\footnotesize] {Descripteurs ML} (ml.west);
+
+    % Ajout d'un cadre global optionnel pour clarté (si nécessaire)
+%     \node[draw, dashed, fit=(inputs) (design), inner sep=1cm] {};
+\end{tikzpicture}
