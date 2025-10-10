@@ -1,0 +1,134 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[margin=2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\sisetup{locale=US,detect-all=true}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    urlcolor=blue!80!black
+}
+
+\newcommand{\email}[1]{\texttt{#1}}
+
+\title{\bf STIAS Team Fellowship Application:\\ Quantum Engineering of Symbiotic Agrivoltaic Systems}
+\author{
+  Theodore GOUMAI VEDEKOI \\
+  \textit{Doctoral Candidate} \\[0.5em]
+  \and
+  Jean-Pierre Tchapet Njafa, PhD \\
+  \textit{Materials \& Systems Lead} \\[0.5em]
+  \and
+  Serge Guy Nana Engo, Professor \\
+  \textit{Quantum Dynamics, Materials \& Systems Lead}
+}
+\date{Submission for First Semester 2027}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\vspace{2em}
+
+\begin{flushleft}
+  \textbf{Submitted by:} \\
+  Serge Guy Nana Engo \\
+  Professor \& Principal Investigator \\
+  Department of Physics, Faculty of Science, University of Yaoundé I \\
+  Email: \email{serge.nana-engo@facsciences-uy1.cm} \\
+  Phone: +237 670 511 632
+\end{flushleft}
+\clearpage
+
+\section*{Project title}
+Quantum engineering of symbiotic agrivoltaic systems: Forging a new paradigm for symbiotic energy and food production.
+
+\section*{Short public summary}
+
+Imagine solar panels that are not just farms of energy, but also guardians of the crops growing below. Our project, Quantum Agrivoltaics, aims to turn this vision into reality by uniting quantum physics, materials science, and artificial intelligence. We are developing a new theory that unravels how the quantum dance of light energy within plants is affected by the spectral signature of overlying solar panels. By understanding these fundamental rules, we can design advanced, biodegradable organic photovoltaic materials that generate clean power while transmitting a perfectly tailored light diet to the crops.
+
+The STIAS residency will be the crucible for this work, bringing our core team of simulation experts, theorists, and materials scientists together. Here, we will build an open-source software platform, the \textit{AgroQuantPV Suite}, and collaborate with agronomists to prepare real-world field trials. Our goal is to forge a validated, scalable pathway for agrivoltaic technologies that powerfully address both clean energy and food security, creating a more sustainable future.
+
+\section*{Project description}
+\subsection*{Overview and motivation}
+
+The twin crises of climate change and food insecurity demand solutions that transcend disciplinary boundaries. Agrivoltaics—the co-location of solar power and agriculture—is a promising frontier, yet its potential is constrained by a classical design philosophy that treats light as a mere quantity of energy. This project challenges that paradigm. We propose to forge a new interdisciplinary path—quantum agrivoltaics—where we unite the principles of non-Markovian quantum dynamics, AI-driven materials discovery, and field-relevant agronomy. Our mission is to co-design spectrally-selective agrivoltaic systems that not only maximize photovoltaic conversion but also actively nurture the quantum processes of photosynthesis.
+
+This integrated programme will bridge the gap between fundamental quantum simulation, using cutting-edge Process-Tensor and adaptive HOPS techniques, and the tangible world of high-performance, biodegradable organic photovoltaics (OPV). By bringing these threads together, we aim to establish a new science of symbiotic design, validated through controlled experiments and prepared for real-world impact.
+
+\subsection*{Objectives}
+
+Our residency at STIAS will be dedicated to achieving four transformative objectives:
+\begin{enumerate}
+\item \textbf{Forge a powerful computational engine.} We will develop and validate the \textit{AgroQuantPV Suite}, an open-source framework integrating Process-Tensor methods, MesoHOPS, and Stochastically Bundled Dissipators. This tool will be the first of its kind, capable of simulating the intricate dance of energy in large-scale OPV aggregates under the influence of structured photonic environments.
+
+\item \textbf{Unravel the quantum rules of symbiosis.} We will deploy our framework to reveal how engineering the spectral signature of OPV panels directly influences the quantum pathways of energy in plants. Our goal is to identify specific spectral windows that create a "quantum advantage"—boosting the plant's electron transport rate (ETR) to maximize the combined value of energy and crop yield.
+
+\item \textbf{Pioneer a new class of eco-compatible materials.} We will establish an ethical AI pipeline (AI-QD) to discover novel, biodegradable, and non-toxic OPV materials. This pipeline will use our quantum simulations as a high-fidelity guide, steering the discovery process towards molecules that are not only efficient but also sustainable.
+
+\item \textbf{Build an open, collaborative ecosystem.} Beyond theory, we aim to build a tangible platform for global collaboration. This includes releasing our software, establishing reproducible experimental protocols, and forging partnerships with agronomists to prepare for crucial field trials.
+\end{enumerate}
+
+\subsection*{Research plan and methods}
+
+\paragraph{Phase I — Building the Digital Twin.} We will begin by constructing a high-fidelity virtual model of the agrivoltaic system. This involves deriving Hamiltonians and spectral densities from \textit{ab initio} molecular dynamics (AIMD) and TD-DFT, calculating accurate excitonic couplings using the Transition Density Cube method, and parameterizing both the structured vibrational baths of the proteins and the filtered photonic spectra from the OPV panels.
+
+\paragraph{Phase II — Unraveling the Quantum Dynamics.} With the model in place, we will simulate the system's non-Markovian dynamics. We will hybridize Process-Tensor and MesoHOPS propagation methods, incorporating advanced techniques like Padé/Matsubara decomposition and low-temperature corrections (LTC) to handle complex environments. The accuracy of our large-scale simulations will be rigorously validated against benchmark HEOM calculations for smaller systems.
+
+\paragraph{Phase III — AI-Driven Materials Discovery.} We will construct an AI-assisted trajectory learning pipeline (AI-QD) to serve as a fast and accurate surrogate for our full quantum simulations. This will enable high-throughput screening of candidate OPV molecules. The AI models will be trained using active learning, incorporating both quantum calculations and experimental data on efficiency, toxicity, and biodegradability.
+
+\paragraph{Phase IV — Bridging Simulation and Reality.} Finally, we will connect our theoretical predictions to the real world. Growth-chamber experiments with spectrally controlled light and in-situ quantum sensors (NV-diamond) will be used to measure coherence signatures and plant physiological responses (ETR, NPQ). The outputs from our quantum models will then be fed into established agronomic models (e.g., DSSAT) to predict crop productivity at the plot scale.
+
+\subsection*{Deliverables and impact}
+
+\begin{itemize}
+  \item The open-source release of the \textbf{AgroQuantPV Suite}, providing the global research community with a powerful new tool.
+  \item Two landmark papers: one detailing the Process-Tensor–MesoHOPS hybridization method, and another presenting the AI-QD trajectory prediction framework.
+  \item An experimental demonstration of a spectrally-selective OPV module that preserves over 85\% of photosynthetic efficiency while delivering a competitive PCE (targeting $>$18\%).
+  \item A public seminar at STIAS and a technology brief for policymakers on scalable eco-design and the circular economy of OPV materials.
+\end{itemize}
+
+\subsection*{Risks and mitigation}
+
+The high computational cost of AIMD will be mitigated by using polarizable classical MD with targeted QM corrections. Potential experimental bottlenecks will be addressed through parallel controlled-environment tests and collaboration with local agronomy partners. The convergence of large-scale HOPS simulations will be managed using adaptive thresholds and validated AI surrogate models for initial screening.
+
+\section*{Team, requested fellowship length and dates}
+
+We propose a core team of three for residence at STIAS during the First Semester of 2027, whose expertise forms a complete, synergistic unit.
+\begin{itemize}
+  \item \textbf{Theodore GOUMAI VEDEKOI} (Doctoral Candidate) As the engine of the project, he will lead the modelling, code development, and experimental coordination.
+    \\ \textit{Requested length:} 3 months (1 March 2027 -- 31 May 2027).
+  \item \textbf{J.-P. Tchapet Njafa, PhD} (Materials \& Systems Lead) As the architect of the theoretical framework, he provides deep expertise in quantum dynamics and advanced algorithm design.
+    \\ \textit{Requested length:} 3 months (1 March 2027 -- 31 May 2027).
+  \item \textbf{S. G. Nana Engo, Professor} (Quantum Dynamics, Materials \& Systems Lead) As the bridge to real-world application, he brings expertise in materials science and eco-compatible device engineering.
+    \\ \textit{Requested length:} 3 months (1 March 2027 -- 31 May 2027).
+\end{itemize}
+We also plan for short, flexible visits from an agronomy partner (e.g., from IITA) and a materials industry advisor to ensure our work remains grounded and impactful.
+
+\section*{How we became aware of STIAS}
+
+We were drawn to STIAS following a strong recommendation from Dr. Philippe Djorwe—my first doctoral student, now an Iso-Lomso Fellow—who described it as the ideal intellectual crucible for the kind of deep, interdisciplinary work our project demands.
+
+\section*{Planned activities at STIAS (work plan)}
+
+The STIAS residency offers a unique environment, free from daily academic distractions, designed to foster deep thought and interdisciplinary breakthroughs. Our plan is to leverage this opportunity to its fullest.
+\begin{itemize}
+  \item \textbf{Weeks 1–4:} Intensive, collaborative code sprints to finalize the AgroQuantPV Suite and establish reproducible workflows.
+  \item \textbf{Weeks 2–6:} Deep-dive sessions on modeling and experimental design, enriched by dialogue with STIAS fellows and local partners.
+  \item \textbf{Weeks 5–10:} Hands-on work with our mobile lab's sensors and growth chambers, and strategic planning for large-scale field trials.
+  \item \textbf{Final Weeks:} A public seminar to share our vision and a closed, multi-disciplinary workshop to strategize technology transfer and policy impact.
+\end{itemize}
+
+\section*{Expected outcomes during/after residency}
+
+\begin{itemize}
+  \item A fully reproducible software release (archived on GitHub with a DOI) and a comprehensive technical report.
+  \item A compelling public seminar and a concise policy brief framed for non-specialists to maximize societal impact.
+  \item A concrete roadmap for follow-on field trials, supported by strong proposals for international funding and industry partnerships.
+\end{itemize}
+
+\end{document}

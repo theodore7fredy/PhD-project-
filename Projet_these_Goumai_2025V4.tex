@@ -5,35 +5,39 @@
 % Date : 05 Octobre 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[12pt, a4paper]{article}
+ \documentclass[12pt, a4paper]{article}
 
 % --- PAQUETS ESSENTIELS ---
-\usepackage[utf8]{inputenc}      
-\usepackage[T1]{fontenc}         
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage[french]{babel}       
 \usepackage[margin=2.cm]{geometry} 
 
 % --- PAQUETS SCIENTIFIQUES ET DE MISE EN FORME ---
 \usepackage{amsmath, amssymb}  
-\usepackage{graphicx, booktabs, tabularx, xcolor, longtable}
+\usepackage{graphicx, booktabs, tabularx, xcolor, longtable, multirow}
+%pour la gestion des légendes des tableaux et figures
+\usepackage[bf,textfont={footnotesize,it}]{caption}
+% Pour la gestion des appendices
+\usepackage[toc,page,title,titletoc,header]{appendix}
 
-% --- PAQUETS SPÉCIALISÉS ---
+% --- PAQUETS SPECIALISES ---
 \usepackage{physics} % Pour les notations physiques (bra, ket, abs, norm, etc.)
 \usepackage{hyperref} % Pour les liens hypertextes
 \usepackage{cleveref} % Pour les références intelligentes (\Cref)
 
-% Configuration optimisée de siunitx pour la typographie des unités
 \usepackage[locale=FR,
-            detect-weight=true,
-            detect-family=true,
+            detect-all=true,
+            group-minimum-digits=4,
             separate-uncertainty=true,
             multi-part-units=single,
             range-phrase=--,
-            number-unit-product=\,]{siunitx}
+            range-units = single,
+            number-unit-product=\, ]{siunitx}
 
 % Paquet pour les diagrammes
-\usepackage{tikz}
-\usetikzlibrary{shapes.geometric, arrows, positioning, calc}
+ \usepackage{tikz}
+ \usetikzlibrary{shapes.geometric, arrows, positioning, calc}
 
 % --- CONFIGURATIONS GLOBALES ---
 
@@ -43,7 +47,7 @@
     linkcolor=blue!50!black,     % Couleur des liens internes (sections, figures)
     citecolor=green!50!black,    % Couleur des citations (non utilisé ici, mais bonne pratique)
     urlcolor=blue!80!black,      % Couleur des URLs
-    pdftitle={Projet de Thèse - Dynamique Quantique Non-Markovienne},
+    pdftitle={Projet de Thèse - Ingénierie quantique des systèmes agrivoltaïques symbiotiques},
     pdfauthor={Théodore Fredy Goumai}
 }
 
@@ -54,12 +58,6 @@
 \DeclareSIUnit{\year}{ans}
 \DeclareSIUnit{\dollar}{\$}
 \DeclareSIUnit{\euro}{€}
-\DeclareSIUnit{\chromophore}{chromophore}
-\DeclareSIUnit{\participant}{participant}
-\DeclareSIUnit{\emploi}{emploi}
-\DeclareSIUnit{\personne}{personne}
-\DeclareSIUnit{\installation}{installation}
-\DeclareSIUnit{\ferme}{ferme}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DÉBUT DU DOCUMENT
@@ -81,7 +79,7 @@
 \newpage
 
 \begin{abstract}
-Ce projet de thèse propose un cadre novateur pour la conception de systèmes agrivoltaïques quantiques symbiotiques, combinant dynamique quantique non-Markovienne avancée, ingénierie de matériaux photoniques et intelligence artificielle éthique. Nous développons une approche unifiée modélisant la culture sous panneau comme un système quantique ouvert soumis à un bain photonique filtré, en formalisant pour la première fois le couplage cohérent entre transfert d'énergie excitonique (\texttt{EET}) et photosynthèse végétale. L'architecture méthodologique intègre les méthodes \texttt{Process Tensor-HOPS} et \texttt{Stochastically Bundled Dissipators} pour une simulation quantique réaliste à l'échelle mésoscopique, couplée à un pipeline d'intelligence artificielle générative pour la conception de matériaux photovoltaïques organiques (\texttt{OPV}) non-toxiques et biodégradables. Le projet établit un écosystème logiciel quantique open-source, \texttt{AgroQuantPV Suite}, et démontre expérimentalement l'optimisation simultanée de la production énergétique (\texttt{PCE} > \SI{20}{\percent}) et agricole (\texttt{ETR} > \SI{90}{\percent}) via un contrôle spectral adaptatif. L'impact est quantifié sur onze Objectifs de Développement Durable, avec un potentiel de valorisation via la spin-off \texttt{AgroQuantum Technologies} visant un coût actualisé de l'énergie (\texttt{LCOE}) de \SI{0.04}{\dollar\per\kilo\watt\hour}.
+Ce projet de thèse propose un cadre novateur pour la conception de systèmes agrivoltaïques quantiques symbiotiques, combinant dynamique quantique non-Markovienne avancée, ingénierie de matériaux photoniques et intelligence artificielle éthique. Nous développons une approche unifiée modélisant la culture sous panneau comme un système quantique ouvert soumis à un bain photonique filtré, en formalisant pour la première fois le couplage cohérent entre transfert d'énergie excitonique (\texttt{EET}) et photosynthèse végétale. L'architecture méthodologique intègre les méthodes \texttt{Process Tensor-HOPS} et \texttt{Stochastically Bundled Dissipators} pour une simulation quantique réaliste à l'échelle mésoscopique, couplée à un pipeline d'intelligence artificielle générative pour la conception de matériaux photovoltaïques organiques (\texttt{OPV}) non-toxiques et biodégradables. Le projet établit un écosystème logiciel quantique open-source, \texttt{AgroQuantPV Suite}, et démontre expérimentalement l'optimisation simultanée de la production énergétique (\texttt{PCE} > \SI{20}{\percent}) et agricole (\texttt{ETR\_{rel}} > \SI{90}{\percent}) via un contrôle spectral adaptatif. L'impact est quantifié sur onze Objectifs de Développement Durable, avec un potentiel de valorisation via la spin-off \texttt{AgroQuantum Technologies} visant un coût actualisé de l'énergie (\texttt{LCOE}) de \SI{0.04}{\dollar\per\kilo\watt\hour}.
 \end{abstract}
 \newpage
 
@@ -117,19 +115,17 @@ Face à ces avancées, ce projet propose de franchir une nouvelle étape en les 
 
 \section{Problématique de recherche}
 
-Le défi principal consiste à développer une plateforme technologique intégrée, exploitant les avancées en dynamique quantique non-markovienne, intelligence artificielle et fabrication additive, pour concevoir des systèmes agrivoltaïques de nouvelle génération.
-
-Les questions de recherche fondamentales sont :
+Le défi principal consiste à développer une plateforme technologique intégrée, exploitant les avancées en dynamique quantique non-markovienne, intelligence artificielle et fabrication additive, pour concevoir des systèmes agrivoltaïques de nouvelle génération, en répondant aux questions suivantes :
 \begin{enumerate}
   \item Comment les \textit{Process Tensor Approaches} peuvent-elles modéliser la mémoire quantique dans les systèmes photosynthétiques et OPV complexes avec une précision et une efficacité supérieures aux méthodes hiérarchiques ?
 
-  \item Comment l'intégration des \textit{Stochastically Bundled Dissipators} peut-elle permettre la simulation en temps quasi-réel de systèmes agrivoltaïques à l'échelle de la parcelle (N > \num{1000} chromophores) ?
+  \item Comment permettre la simulation en temps quasi-réel de systèmes à l'échelle de la parcelle (N \num{>1000} chromophores) via les \textit{Stochastically Bundled Dissipators} tout en préservant les effets non-Markoviens ?
 
-  \item Comment une architecture 3D de collecte solaire peut-elle être optimisée pour maximiser simultanément la production énergétique et la productivité agricole via un filtrage spectral adaptatif ?
+  \item Comment optimiser une architecture 3D de collecte solaire pour maximiser simultanément la production énergétique et la productivité agricole via un filtrage spectral adaptatif ?
 
   \item Comment concevoir et déployer un écosystème logiciel quantique, l'\textit{AgroQuantPV Suite}, pour faciliter l'adoption industrielle et la collaboration internationale ?
 
-  \item Comment assurer une commercialisation éthique et inclusive des innovations développées, avec une création d'emplois locaux et un transfert de compétences effectif ?
+  \item Comment établir une feuille de route pour le transfert technologique via un plan d'affaires robuste et une gouvernance éthique ?
 \end{enumerate}
 
 \section{Contribution aux Objectifs de Développement Durable (ODD)}
@@ -139,13 +135,16 @@ Ce projet est conçu pour générer un impact mesurable sur onze ODD, avec des m
 \subsection{ODD 7 : Énergie propre et d'un coût abordable}
 \begin{itemize}
     \item \textbf{Cible 7.2.} Accroître nettement la part des énergies renouvelables dans le bouquet énergétique mondial, en visant un LCOE inférieur à \SI{0.04}{\dollar\per\kilo\watt\hour}.
+
     \item \textbf{Cible 7.a.} Renforcer la coopération internationale pour faciliter l'accès à la recherche et à la technologie relatives aux énergies propres, via l'écosystème \textit{AgroQuantPV Suite} open-source.
+
     \item \textbf{Cible 7.3.} Contribuer à doubler le taux d'amélioration de l'efficacité énergétique grâce à l'architecture 3D qui augmente la surface collectrice de plus de \SI{60}{\percent}.
 \end{itemize}
 
 \subsection{ODD 2 : Faim "zéro"}
 \begin{itemize}
     \item \textbf{Cible 2.3.} Doubler la productivité agricole en maintenant \SI{90}{\percent} de l'ETR (Electron Transport Rate) sous les panneaux.
+
     \item \textbf{Cible 2.4.} Assurer la viabilité des systèmes de production alimentaire et mettre en oeuvre des pratiques agricoles résilientes grâce au monitoring 3D de la canopée par capteurs quantiques.
 \end{itemize}
 
@@ -157,24 +156,28 @@ Ce projet est conçu pour générer un impact mesurable sur onze ODD, avec des m
 \subsection{ODD 6 : Eau propre et assainissement}
 \begin{itemize}
     \item \textbf{Cible 6.4.} Augmenter considérablement l'efficacité de l'utilisation des ressources en eau en réduisant l'évaporation de \SI{25}{\percent}.
+
     \item \textbf{Cible 6.6.} Protéger et restaurer les écosystèmes liés à l'eau, en mettant en place une traçabilité par blockchain pour l'économie circulaire des matériaux et éviter la contamination.
 \end{itemize}
 
 \subsection{ODD 8 : Travail décent et croissance économique}
 \begin{itemize}
     \item \textbf{Cible 8.2.} Atteindre un niveau plus élevé de productivité économique par la modernisation technologique et l'innovation, via la création de la spin-off \textit{AgroQuantum Technologies} (\num{20}+ emplois directs).
+
     \item \textbf{Cible 8.5.} Parvenir au plein emploi productif et garantir un travail décent pour toutes les femmes et tous les hommes, avec un objectif de \SI{40}{\percent} de femmes parmi les \num{50}+ personnes formées.
 \end{itemize}
 
 \subsection{ODD 9 : Industrie, innovation et infrastructure}
 \begin{itemize}
     \item \textbf{Cible 9.4.} Moderniser l'infrastructure et adapter les industries pour les rendre durables, via l'écosystème logiciel quantique pour l'innovation industrielle.
+
     \item \textbf{Cible 9.5.} Renforcer la recherche scientifique et les capacités technologiques des secteurs industriels, en encourageant l'innovation via une plateforme collaborative mondiale.
 \end{itemize}
 
 \subsection{ODD 12 : Consommation et production responsables}
 \begin{itemize}
     \item \textbf{Cible 12.2.} Parvenir à une gestion durable et une utilisation rationnelle des ressources naturelles, via une économie circulaire pour les matériaux OPV.
+
     \item \textbf{Cible 12.5.} Réduire considérablement la production de déchets par la prévention, la réduction, le recyclage et la réutilisation, grâce à une conception pour le démontage.
 \end{itemize}
 
@@ -186,18 +189,21 @@ Ce projet est conçu pour générer un impact mesurable sur onze ODD, avec des m
 \subsection{ODD 15 : Vie terrestre}
 \begin{itemize}
     \item \textbf{Cible 15.1.} Garantir la conservation, la restauration et l'exploitation durable des écosystèmes terrestres, en préservant \SI{100}{\percent} de l'usage agricole du sol.
+
     \item \textbf{Cible 15.9.} Intégrer les considérations relatives aux écosystèmes et à la biodiversité dans la planification nationale et locale, en créant une symbiose industrie-agriculture.
 \end{itemize}
 
 \subsection{ODD 16 : Paix, justice et institutions efficaces}
 \begin{itemize}
     \item \textbf{Cible 16.6.} Mettre en place des institutions efficaces, responsables et transparentes, en utilisant la blockchain pour la gouvernance du projet.
+
     \item \textbf{Cible 16.7.} Garantir une prise de décision réceptive, inclusive, participative et représentative, en intégrant des principes d'éthique de l'IA et de justice environnementale.
 \end{itemize}
 
 \subsection{ODD 17 : Partenariats pour la réalisation des objectifs}
 \begin{itemize}
     \item \textbf{Cible 17.6.} Améliorer la coopération Nord-Sud et Sud-Sud en matière de science, de technologie et d’innovation, via l'écosystème \textit{AgroQuantPV Suite}.
+
     \item \textbf{Cible 17.9.} Renforcer l'appui international à la mise en oeuvre d'un renforcement des capacités efficace et ciblé, via la création d'un réseau mondial de compétences quantiques.
 \end{itemize}
 
@@ -212,28 +218,36 @@ Cet axe vise à développer un cadre théorique et computationnel capable de mod
 
 \subsubsection{Caractérisation de la non-classicalité vibronique comme moteur de l'efficacité}
 \begin{itemize}
-    \item \textbf{Diagnostic de la non-classicalité.} Intégrer dans les simulations des diagnostics quantiques avancés, tels que le calcul du \textbf{paramètre Q de Mandel} et de la \textbf{distribution de quasi-probabilité P de Wigner}, pour quantifier la nature non-classique des modes vibrationnels collectifs.
+    \item \textbf{Diagnostic de la non-classicalité.} Quantifier la nature non-classique des modes vibrationnels collectifs en intégrant, dans les simulations, des diagnostics quantiques avancés, tels que le calcul du \textbf{paramètre Q de Mandel} et de la \textbf{distribution de quasi-probabilité P de Wigner}.
+
     \item \textbf{Corrélation avec la performance symbiotique.} Établir une corrélation directe entre la présence de non-classicalité vibronique et l'efficacité symbiotique globale (SPCE), afin de tester l'hypothèse selon laquelle ces fluctuations quantiques sont un mécanisme clé de l'optimisation énergétique.
 \end{itemize}
 
 \subsubsection{Simulation haute-fidélité des bains thermiques structurés}
 \begin{itemize}
     \item \textbf{Gestion des modes ultra-rapides du bain.} Implémenter et valider des techniques de \textbf{Correction de Basse Température (LTC)} au sein de la méthodologie \texttt{HOPS}. Cette approche permettra de traiter efficacement les modes de Matsubara, cruciaux pour les benchmarks spectroscopiques à \SI{77}{\kelvin}, en réduisant le coût computationnel sans sacrifier la précision.
-    \item \textbf{Calcul de couplage au-delà du dipôle ponctuel.} Dépasser l'approximation du dipôle idéal (IDA) en utilisant systématiquement la méthode du \textbf{Transition Density Cube (TDC)} pour le calcul des couplages intermoléculaires ($J_{mn}$), garantissant une description précise des interactions à courte portée (< \SI{30}{\angstrom}) dans les agrégats OPV.
+
+    \item \textbf{Calcul de couplage au-delà du dipôle ponctuel.} Dépasser l'approximation du dipôle idéal (IDA) en utilisant systématiquement la méthode du \textbf{Transition Density Cube (TDC)} pour le calcul des couplages intermoléculaires ($J_{mn}$), garantissant une description précise des interactions à courte portée (\SI{<30}{\angstrom}) dans les agrégats OPV.
+\end{itemize}
+
+\subsubsection{Scalabilité pour les systèmes multi-excitations}
+\begin{itemize}
+\item Valider l'approche Dissipateurs Stochastiques Groupés (Stochastically Bundled Dissipators, SBD), en régime non-Markovien et exploiter le scaling de \texttt{MesoHOPS} pour aborder le défi des états à double excitation et de transfert de charge.
 \end{itemize}
 
 \subsection{Axe 2 : Architecture 3D et capteurs quantiques}
-% --- Note : Les raffinements fournis se concentrent sur les Axes 1 et 3. ---
-% --- L'Axe 2 est maintenu dans sa version robuste précédente, qui est déjà alignée. ---
+
 \subsubsection{Optimisation des cohérences vibroniques productives}
 \begin{itemize}
     \item \textbf{Filtrage spectral pour la symbiose.} Modéliser la transmittance totale $T_{\text{total}}(\omega) = \prod_{i=1}^N T_i(\omega, z_i)$ pour identifier les quasi-résonances entre les transitions excitoniques et les modes vibratoires fonctionnels, afin de maximiser le transfert d'énergie assisté par les vibrations.
+
     \item \textbf{Modélisation prédictive de la canopée.} Coupler la simulation de la transmittance spectrale à des modèles agronomiques (type DSSAT) pour prédire le profil vertical de l'ETR et optimiser le compromis énergie-biomasse.
 \end{itemize}
 
 \subsubsection{Sondage des corrélations quantiques système-environnement}
 \begin{itemize}
     \item \textbf{Capteurs à centres NV pour l'intrication.} Orienter l'utilisation des capteurs NV-diamant vers la détection de signatures de corrélations quantiques robustes, comme la négativité (intrication) entre les excitons et les modes vibrationnels pertinents.
+
     \item \textbf{Monitoring 3D de la réponse photosynthétique.} Déployer un réseau de capteurs à plusieurs hauteurs pour cartographier en 3D la réponse de la canopée (ex: quenching non photochimique, NPQ) à l'environnement lumineux modulé.
 \end{itemize}
 
@@ -244,16 +258,18 @@ Cet axe se concentre sur le développement d'un pipeline d'IA pour accélérer l
 \subsubsection{Développement d'un cadre de dynamique quantique assistée par IA (AI-QD)}
 \begin{itemize}
     \item \textbf{Adoption d'une approche non-récursive.} Développer un cadre d'IA basé sur l'\textbf{apprentissage de trajectoire (trajectory learning)} pour prédire directement l'évolution temporelle complète de la matrice densité $\rho(t)$ en fonction des paramètres du système. Cette approche non-récursive accélérera massivement le criblage en évitant la propagation pas-à-pas.
+
     \item \textbf{Paramétrisation des champs de force par IA.} Utiliser des algorithmes d'apprentissage actif (ex: Régression par processus gaussiens) pour paramétrer avec une grande efficacité les champs de force utilisés dans les simulations de dynamique moléculaire (MD), garantissant ainsi la haute qualité des entrées structurales (fonctions spectrales $J(\omega, T)$) pour le modèle quantique.
 \end{itemize}
 
 \subsubsection{Optimisation multicritère et ingénierie des matériaux}
 \begin{itemize}
     \item \textbf{Renforcement des descripteurs moléculaires.} Intégrer l'analyse du \textbf{Potentiel Électrostatique de surface (ESP)} comme descripteur clé dans le pipeline d'IA. L'ESP sera utilisé pour prédire l'alignement moléculaire et maximiser la force motrice de la dissociation des excitons.
-    \item \textbf{Ciblage de métriques de performance clés.} Définir l'objectif de l'IA comme la recherche de matériaux présentant des propriétés optimales pour un PCE > \SI{20}{\percent}, à savoir des \textbf{mobilités de porteurs de charge équilibrées et élevées} ($\mu_h \approx \mu_e \geq \SI{e-3}{\centi\meter\squared\per\volt\per\second}$) et un \textbf{faible taux de recombinaison non-géminée} ($k \leq \SI{e-12}{\centi\meter\cubed\per\second}$).
+
+    \item \textbf{Ciblage de métriques de performance clés.} Définir l'objectif de l'IA comme la recherche de matériaux présentant des propriétés optimales pour un PCE \SI{>20}{\percent}, à savoir des \textbf{mobilités de porteurs de charge équilibrées et élevées} ($\mu_h \approx \mu_e \geq \SI{e-3}{\centi\meter\squared\per\volt\per\second}$) et un \textbf{faible taux de recombinaison non-géminée} ($k \leq \SI{e-12}{\centi\meter\cubed\per\second}$).
 \end{itemize}
 
-\section{Cadre théorique et méthodologique renforcé}
+\section{Cadre théorique et méthodologique}
 
 La méthodologie de ce projet est une boucle intégrée alliant simulation multi-échelles, intelligence artificielle et validation expérimentale. Ce cycle vertueux, illustré dans la \Cref{fig_workflow_methodo}, garantit que les prédictions théoriques sont constamment confrontées à la réalité du terrain, tandis que l'apprentissage automatique accélère l'exploration de l'espace des matériaux possibles.
 
@@ -274,17 +290,20 @@ Notre approche méthodologique repose sur une intégration cohérente des métho
 \begin{itemize}
     \item \textbf{Process Tensor pour la mémoire non-markovienne.} 
     \begin{equation}
-    \mathcal{K}_{\text{PT}}(t,s) = \sum_{k=1}^{N_{\text{modes}}} g_k(t) f_k(s) e^{-\lambda_k |t-s|} + \mathcal{K}_{\text{non-exp}}(t,s)
+    \mathcal{K}_{\text{PT}}(t,s) = \sum_{k=1}^{N_{\text{modes}}} g_k(t) f_k(s) e^{-\lambda_k |t-s|} + \mathcal{K}_{\text{non-exp}}(t,s).
     \end{equation}
     avec décomposition en pôles de Padé pour les composantes non-exponentielles, permettant une description fidèle des corrélations temporelles à long terme.
+
+    Pour améliorer la performance à basse température (\SI{77}{\kelvin}), nous intégrerons une correction de basse température (LTC) dans le calcul du tenseur de processus. Cela implique de modifier la fonction de corrélation du bain pour inclure une intégration effective du bruit à basse température, réduisant ainsi le coût computationnel sans
+    sacrifier la précision.
     
     \item \textbf{Extension MesoHOPS pour la mésoéchelle.}
     \begin{equation}
-    \pdv{t} \psi_{\mathbf{n}} = -i\mathtt{H}_{\text{eff}}\psi_{\mathbf{n}} + \sum_{k=1}^K n_k\gamma_k\psi_{\mathbf{n}} + \sum_{k=1}^K \sqrt{(n_k+1)|\gamma_k|} \mathtt{L}_k\psi_{\mathbf{n}+\mathbf{e}_k}
+    \pdv{t} \psi_{\mathbf{n}} = -i\mathtt{H}_{\text{eff}}\psi_{\mathbf{n}} + \sum_{k=1}^K n_k\gamma_k\psi_{\mathbf{n}} + \sum_{k=1}^K \sqrt{(n_k+1)|\gamma_k|} \mathtt{L}_k\psi_{\mathbf{n}+\mathbf{e}_k}.
     \end{equation}
     Adaptation pour systèmes multi-excitations avec scaling $\mathcal{O}(N^{2.5})$ via algorithmes de compression tensorielle.
     
-    \item \textbf{Schéma d'hybridation adaptatif.} Commutation dynamique \texttt{PT-MesoHOPS} basée sur le temps de corrélation effectif $\tau_c^{\text{eff}}$ et la taille du système, optimisant le compromis précision-coût.
+    \item \textbf{Schéma d'hybridation adaptatif.} Commutation dynamique \texttt{Process Tensor-MesoHOPS} basée sur le temps de corrélation effectif $\tau_c^{\text{eff}}$ et la taille du système, optimisant le compromis précision-coût.
 \end{itemize}
 
 \subsubsection{Gestion avancée du désordre et de la température}
@@ -294,7 +313,7 @@ Notre approche méthodologique repose sur une intégration cohérente des métho
     
     \item \textbf{Fonctions spectrales température-dépendantes.}
     \begin{equation}
-    J(\omega, T) = J_0(\omega)\left[1 + \frac{2}{\exp(\hbar\omega/k_B T) - 1}\right] + J_{\text{low-freq}}(\omega, T)
+    J(\omega, T) = J_0(\omega)\left[1 + \frac{2}{\exp(\hbar\omega/k_B T) - 1}\right] + J_{\text{low-freq}}(\omega, T),
     \end{equation}
     modélisant explicitement les effets thermiques dans les conditions opérationnelles agrivoltaïques (\SIrange{277}{310}{\kelvin}).
     
@@ -306,7 +325,7 @@ Notre approche méthodologique repose sur une intégration cohérente des métho
 Pour une description réaliste des environnements biomimétiques complexes, nous adoptons un modèle de bain à deux niveaux :
 
 \begin{itemize}
-    \item \textbf{Bain interne.} Traitement quasi-exact des modes vibrationnels structurés pertinents (e.g., < \SI{200}{\per\centi\meter}) via inclusion dans l'Hamiltonien système ou méthodes \texttt{MCTDH-X}.
+    \item \textbf{Bain interne.} Traitement quasi-exact des modes vibrationnels structurés pertinents (e.g., \SI{<200}{\per\centi\meter}) via inclusion dans l'Hamiltonien système ou méthodes \texttt{MCTDH-X}.
     
     \item \textbf{Bain externe.} Modélisation du continuum dissipatif comme bain gaussien dérivé de l'\texttt{AIMD}, préservant les effets de mémoire environnementale.
     
@@ -320,7 +339,7 @@ Pour une description réaliste des environnements biomimétiques complexes, nous
 \begin{itemize}
     \item \textbf{Algorithme de regroupement spectral.} Partitionnement des opérateurs de Lindblad basé sur la similarité structurelle et énergétique :
     \begin{equation}
-    \mathtt{L}_k^{\text{bundle}} = \sum_{j \in C_k} w_j(T) \mathtt{L}_j, \quad w_j(T) = \frac{\|\mathcal{D}[\mathtt{L}_j]\|_2}{\sum_{m\in C_k} \|\mathcal{D}[\mathtt{L}_m]\|_2}
+    \mathtt{L}_k^{\text{bundle}} = \sum_{j \in C_k} w_j(T) \mathtt{L}_j, \quad w_j(T) = \frac{\|\mathcal{D}[\mathtt{L}_j]\|_2}{\sum_{m\in C_k} \|\mathcal{D}[\mathtt{L}_m]\|_2}.
     \end{equation}
     
     \item \textbf{Contrôle d'erreur adaptatif.} Estimation en temps réel de l'erreur de troncature et ajustement dynamique du nombre de bundles, garantissant une précision contrôlée avec réduction de coût computationnel de \SI{40}{\percent}.
@@ -334,7 +353,7 @@ Pour une description réaliste des environnements biomimétiques complexes, nous
     \item \textbf{Métriques de fidélité quantique.} Calcul de la fidélité $F(\rho_{\text{PT}}, \rho_{\text{NISQ}})$ pour évaluation rigoureuse de la précision des méthodes approximatives.
 \end{itemize}
 
-\section{Modélisation Quantique des Systèmes Agrivoltaïques Symbiotiques}
+\section{Modélisation quantique des systèmes agrivoltaïques symbiotiques}
 
 \subsection{Formalisme de système quantique ouvert culture-panneau}
 
@@ -347,6 +366,7 @@ Nous établissons un formalisme unifié décrivant le couplage quantique entre d
 où,
 \begin{itemize}
     \item $\mathtt{H}_{\text{PSU}} = \sum_{i=1}^{N_{\text{Chl}}} \varepsilon_i a_i^\dagger a_i + \sum_{i\neq j} J_{ij} a_i^\dagger a_j$ modélise le photosystème II.
+
     \item $\mathtt{V}_{\text{spectral}} = \int \dd{\omega} T_{\text{quant}}(\omega) \otimes B_{\text{light}}(\omega)$ décrit le filtrage spectral cohérent.
 \end{itemize}
 
@@ -355,7 +375,6 @@ où,
 \begin{equation}
 T_{\text{quant}}(\omega) = \sum_{n,m} \frac{\langle n | \mu | m \rangle \langle m | \mu | n \rangle}{\omega - (E_m - E_n) + i\Gamma_{mn}} \cdot F_{\text{coh}}(T, \tau_{\text{decay}}).
 \end{equation}
-
 avec $F_{\text{coh}}$ facteur de cohérence température-dépendant capturant les effets non-markoviens.
 
 \subsection{Optimisation Pareto quantique pour la symbiose énergétique}
@@ -363,14 +382,14 @@ avec $F_{\text{coh}}$ facteur de cohérence température-dépendant capturant le
 \subsubsection{Métriques de performance symbiotique}
 
 \begin{itemize}
-    \item \textbf{SPCE (Symbiotic Power Conversion Efficiency).}
+    \item \textbf{SPCE (Symbiotic Power Conversion Efficiency).} C'est une métrique combinant le PCE, l'ETR relatif et un indice de biodiversité.
     \begin{equation}
-    \text{SPCE} = \alpha \cdot \text{PCE} + \beta \cdot \text{ETR}_{\text{rel}} + \gamma \cdot \text{BI}_{\text{biodiversity}}
+    \text{SPCE} = \alpha \cdot \text{PCE} + \beta \cdot \text{ETR}_{\text{rel}} + \gamma \cdot \text{BI}_{\text{biodiversity}}.
     \end{equation}
     
     \item \textbf{Indice de synergie quantique.}
     \begin{equation}
-    Q_{\text{syn}} = \frac{\text{Tr}(\rho_{\text{OPV}}\rho_{\text{PSU}}) - \text{Tr}(\rho_{\text{OPV}})\text{Tr}(\rho_{\text{PSU}})}{\|\rho_{\text{OPV}}\| \|\rho_{\text{PSU}}\|}
+    Q_{\text{syn}} = \frac{\text{Tr}(\rho_{\text{OPV}}\rho_{\text{PSU}}) - \text{Tr}(\rho_{\text{OPV}})\text{Tr}(\rho_{\text{PSU}})}{\|\rho_{\text{OPV}}\| \|\rho_{\text{PSU}}\|}.
     \end{equation}
 \end{itemize}
 
@@ -391,11 +410,11 @@ avec $F_{\text{coh}}$ facteur de cohérence température-dépendant capturant le
 \begin{itemize}
     \item \textbf{Potentiel de toxicité quantique.}
     \begin{equation}
-    Q_{\text{tox}} = \sum_i \langle \psi | \hat{O}_{\text{react},i} | \psi \rangle \cdot \Gamma_{\text{release},i}.
+    Q_{\text{tox}} = \sum_i \langle \psi | \mathtt{O}_{\text{react},i} | \psi \rangle \cdot \Gamma_{\text{release},i},
     \end{equation}
-    où $\hat{O}_{\text{react}}$ sont les opérateurs de réactivité chimique dérivés de calculs \texttt{TD-DFT}.
+    où $\mathtt{O}_{\text{react}}$ sont les opérateurs de réactivité chimique dérivés de calculs \texttt{TD-DFT}.
     
-    \item \textbf{Engineering de gaps de stabilité.} Conception de matériaux avec \texttt{HOMO-LUMO} gap > \SI{3.5}{\electronvolt} et gap de charge > \SI{2.8}{\electronvolt} pour minimiser la dégradation photochimique et la libération d'espèces toxiques.
+    \item \textbf{Engineering de gaps de stabilité.} Conception de matériaux avec \texttt{HOMO-LUMO} gap \SI{>3.5}{\electronvolt} et gap de charge \SI{>2.8}{\electronvolt} pour minimiser la dégradation photochimique et la libération d'espèces toxiques.
 \end{itemize}
 
 \subsubsection{Agrégats biocompatibles par design}
@@ -403,7 +422,7 @@ avec $F_{\text{coh}}$ facteur de cohérence température-dépendant capturant le
 \begin{itemize}
     \item \textbf{Dimères à transfert de charge contrôlé.} Conception de paires donneur-accepteur avec intégrale de transfert optimisée pour la stabilité :
     \begin{equation}
-    J_{\text{DA}} = \langle \phi_D | \mathtt{H} | \phi_A \rangle \quad \text{avec} \quad \frac{\partial J_{\text{DA}}}{\partial t} < J_{\text{crit}}.
+    J_{\text{DA}} = \langle \phi_D | \mathtt{H} | \phi_A \rangle \quad \text{avec} \quad \pdv{J_{\text{DA}}}{t} < J_{\text{crit}}.
     \end{equation}
     
     \item \textbf{Encapsulation moléculaire auto-assemblée.} Design de ligands chiralement purs pour prévenir la libération d'ions métalliques, exploitant les effets stériques quantiques.
@@ -418,7 +437,7 @@ avec $F_{\text{coh}}$ facteur de cohérence température-dépendant capturant le
     
     \item \textbf{Modèles multi-objectifs.}
     \begin{equation}
-    \max_{x} [\text{PCE}(x), -\text{Toxicity}(x), \text{Biodegradability}(x)]
+    \max_{x} [\text{PCE}(x), -\text{Toxicity}(x), \text{Biodegradability}(x)].
     \end{equation}
     avec $x$ dans l'espace chimique des \texttt{OPV} exploré via algorithmes génétiques quantiques.
 \end{itemize}
@@ -431,7 +450,7 @@ avec $F_{\text{coh}}$ facteur de cohérence température-dépendant capturant le
     \item \textbf{Engineering de voies de dégradation préférentielles.} Design de matériaux se décomposant en produits non-toxiques identifiés via optimisation quantique.
 \end{itemize}
 
-\section{Plateforme Expérimentale Quantique-Agronomique}
+\section{Plateforme expérimentale quantique-agronomique}
 
 \subsection{Laboratoire mobile de caractérisation quantique}
 
@@ -461,7 +480,7 @@ avec $F_{\text{coh}}$ facteur de cohérence température-dépendant capturant le
 \begin{itemize}
     \item \textbf{Fonction de corrélation cohérence-croissance.}
         \begin{equation}
-            C(\tau) = \ev {\text{ETR}(t) \cdot \text{Coherence}(t+\tau)}_t
+            C(\tau) = \ev {\text{ETR}(t) \cdot \text{Coherence}(t+\tau)}_t .
         \end{equation}
     
     \item \textbf{Analyse de transfert d'information quantique.} Estimation de l'information mutuelle entre observables quantiques et paramètres agronomiques, quantifiant le couplage fondamental.
@@ -519,56 +538,70 @@ avec $F_{\text{coh}}$ facteur de cohérence température-dépendant capturant le
     \item \textbf{Barrières multiples contre les risques.} Encapsulation, monitoring en temps réel, plans de démantèlement et recyclage quantique.
 \end{itemize}
 
-\section{Chronogramme Révisé et Réaliste}
+\section{Chronogramme et gestion des risques}
+
+Le déroulement du projet sur trois ans est détaillé dans le \Cref{tab_timeline}.
 
 \begin{longtable}{@{}lp{0.35\textwidth}p{0.4\textwidth}@{}}
-    \caption{Chronogramme détaillé du projet de thèse (36 mois) révisé.} \label{tab_timeline} \\
+    \caption{Chronogramme détaillé du projet de thèse (36 mois).} \label{tab_timeline} \\
     \toprule
     \textbf{Période} & \textbf{Objectifs scientifiques} & \textbf{Livrables et critères de succès} \\ 
     \midrule
     \endfirsthead
+    
     \caption[]{{\textit{(suite)} Chronogramme détaillé du projet.}} \\
     \toprule
     \textbf{Période} & \textbf{Objectifs scientifiques} & \textbf{Livrables et critères de succès} \\ 
     \midrule
     \endhead
+    
     \midrule \multicolumn{3}{r}{\textit{(suite à la page suivante)}} \\ 
     \endfoot
+    
     \bottomrule
     \endlastfoot
     
-    \textbf{M1-M12} & Développement noyau \texttt{PT-HOPS} & • Code validé sur dimère FMO (précision >98\%)\\
-    & Validation sur systèmes modèles & • Publication méthode \\
-    & & • Benchmark contre \texttt{HEOM/QuTiP} \\
+    \multirow{3}{*}{\textbf{M1-M12}} & \multirow{3}{*}{\parbox{0.35\textwidth}{Développement du noyau \texttt{PT-HOPS} avec LTC ; \\ Validation sur systèmes modèles.}} & • Code validé sur dimère FMO (précision \SI{>98}{\%}) \\
+    \cline{3-3}
+    & & • Publication sur la méthode \\
+    \cline{3-3}
+    & & • Benchmark contre \texttt{HEOM/QuTiP} \\\addlinespace
     \midrule
-    \textbf{M13-M24} & Extension \texttt{MesoHOPS} & • Simulation N=100 chromophores \\
-    & Intégration désordre/température & • Modèles température-dépendants validés \\
-    & Premiers designs \texttt{OPV} éco-compatibles & • 2 candidats avec \texttt{PCE}>\SI{15}{\percent} et toxicité réduite \\
+    
+    \multirow{3}{*}{\textbf{M13-M24}} & \multirow{3}{*}{\parbox{0.35\textwidth}{Extension \texttt{MesoHOPS} pour multi-excitations ; \\ Intégration du désordre et de la température ; \\ Premiers designs \texttt{OPV} éco-compatibles via AI-QD}} & • Simulation N=\num{100} chromophores \\
+    \cline{3-3}
+    & & • Modèles température-dépendants validés \\
+    \cline{3-3}
+    & & • 2 candidats OPV avec \texttt{PCE\_pred} \SI{>18}{\percent} et toxicité réduite \\\addlinespace
     \midrule
-    \textbf{M25-M36} & Systèmes complets agrivoltaïques & • Modèle symbiotique validé \\
-    & Validation expérimentale & • \texttt{SPCE} > \SI{25}{\percent} démontrée \\
-    & Préparation spin-off & • Business plan finalisé \\
+    
+    \multirow{3}{*}{\textbf{M25-M36}} & \multirow{3}{*}{\parbox{0.35\textwidth}{Simulation de systèmes agrivoltaïques complets ; \\ Validation expérimentale du modèle symbiotique ; \\ Préparation du transfert technologique.}} & • Modèle symbiotique validé \\
+    \cline{3-3}
+    & & • Corrélation théorie-expérience démontrée \\
+    \cline{3-3}
+    & & • Business plan de la spin-off finalisé \\\addlinespace\addlinespace
 \end{longtable}
 
 \subsection{Jalons critiques et gestion des risques}
 
 \paragraph{Jalons techniques majeurs}
 \begin{itemize}
-    \item \textbf{M6.} Reproduction spectre d'absorption (petit agrégat) via \texttt{DadHOPS} - précision > \SI{95}{\percent}.
-    \item \textbf{M12.} Benchmark \texttt{adHOPS} vs \texttt{HEOM} (dimère/trimère + désordre) - écart < \SI{5}{\percent}.
+    \item \textbf{M6.} Reproduction spectre d'absorption (petit agrégat) via \texttt{DadHOPS} - précision \SI{>95}{\percent}.
+    \item \textbf{M12.} Benchmark \texttt{adHOPS} vs \texttt{HEOM} (dimère/trimère + désordre) - écart \SI{<5}{\percent}.
     \item \textbf{M18.} Premier modèle culture-panneau opérationnel avec \texttt{ETR}($T(\omega)$).
-    \item \textbf{M24.} Pipeline ML multi-objectifs validé - précision \texttt{PCE} > \SI{90}{\percent}, toxicité > \SI{80}{\percent}.
-    \item \textbf{M30.} Simulations multi-échelles couplées : jusqu'à N=500 chromophores.
+    \item \textbf{M24.} Pipeline ML multi-objectifs validé - précision \texttt{PCE} \SI{>90}{\percent}, toxicité \SI{>80}{\percent}.
+    \item \textbf{M30.} Simulations multi-échelles couplées : jusqu'à N=\num{500} chromophores.
 \end{itemize}
 
 \paragraph{Stratégie de gestion des risques}
 \begin{itemize}
     \item \textbf{Coût \texttt{AIMD} élevé.} Recours à MD classique polarisable + corrections QM ciblées.
     \item \textbf{Convergence \texttt{adHOPS}.} Protocoles de validation (profondeur hiérarchique, pôles, steps adaptatifs) ; si lente, switch à \texttt{HEOM} lite (\texttt{QuTiP}).
-    \item \textbf{Validation expérimentale limitée.} Collaboration avec partenaires agricoles/photovoltaïques (e.g., IITA pour données locales maïs/sorgho).
+    \item \textbf{Validation expérimentale limitée.} Collaboration avec partenaires agricoles/photovoltaïques (e.g., IITA (Institut International d'Agriculture Tropicale) pour données locales maïs/sorgho).
 \end{itemize}
 
-\section{Impact Attendu et Perspectives Transformatives}
+
+\section{Impact attendu et perspectives transformatives}
 
 \subsection{Impact scientifique et méthodologique}
 
@@ -585,11 +618,11 @@ avec $F_{\text{coh}}$ facteur de cohérence température-dépendant capturant le
 
 \paragraph{Innovation matériaux et dispositifs}
 \begin{itemize}
-    \item \textbf{Matériaux OPV 4ème génération.} Conception rationnelle de matériaux biocompatibles atteignant \texttt{PCE} > \SI{18}{\percent} avec empreinte environnementale réduite de \SI{60}{\percent}.
+    \item \textbf{Matériaux OPV 4ème génération.} Conception rationnelle de matériaux biocompatibles atteignant \texttt{PCE} \SI{>18}{\percent} avec empreinte environnementale réduite de \SI{60}{\percent}.
     
-    \item \textbf{Panneaux agrivoltaïques optimisés.} Développement de filtres spectraux adaptés préservant > \SI{85}{\percent} de l'activité photosynthétique.
+    \item \textbf{Panneaux agrivoltaïques optimisés.} Développement de filtres spectraux adaptés préservant \SI{>85}{\percent} de l'activité photosynthétique.
     
-    \item \textbf{Outils prédictifs industriels.} Pipeline ML opérationnel pour criblage rapide (< \SI{24}{\hour}) de candidats moléculaires.
+    \item \textbf{Outils prédictifs industriels.} Pipeline ML opérationnel pour criblage rapide (\SI{<24}{\hour}) de candidats moléculaires.
 \end{itemize}
 
 \subsection{Contribution quantitative aux ODD}
@@ -597,9 +630,9 @@ avec $F_{\text{coh}}$ facteur de cohérence température-dépendant capturant le
 \paragraph{Métriques d'impact mesurables}
 \begin{itemize}
     \item \textbf{ODD 7.} Amélioration efficacité : \SIrange{+10}{+15}{\percent} vs matériaux standards → +\SI{12}{\giga\watt\hour} annuels par km² installé.
-    \item \textbf{ODD 2.} Préservation productivité : \texttt{ETR} > \SI{80}{\percent} → maintien \SIrange{85}{95}{\percent} rendement agricole.
+    \item \textbf{ODD 2.} Préservation productivité : \texttt{ETR} \SI{>80}{\percent} → maintien \SIrange{85}{95}{\percent} rendement agricole.
     \item \textbf{ODD 3.} Matériaux non toxiques : Élimination Pb, Cd → réduction risques \SI{90}{\percent}.
-    \item \textbf{ODD 15.} Biodégradabilité : Composants organiques dégradables en < \SI{10}{\year}.
+    \item \textbf{ODD 15.} Biodégradabilité : Composants organiques dégradables en \SI{<10}{\year}.
 \end{itemize}
 
 \subsection{Perspectives à long terme (2030-2040)}
@@ -607,7 +640,7 @@ avec $F_{\text{coh}}$ facteur de cohérence température-dépendant capturant le
 \paragraph{Extensions de recherche}
 \begin{itemize}
     \item \textbf{Photosynthèse artificielle.} Application principes \texttt{EET} optimisé à dispositifs biomimétiques pour production H\textsubscript{2}, CO\textsubscript{2} capture.
-    \item \textbf{Matériaux auto-réparants.} Intégration mécanismes quantiques de réparation photosynthétique dans \texttt{OPV} (durabilité > \SI{30}{\year}).
+    \item \textbf{Matériaux auto-réparants.} Intégration mécanismes quantiques de réparation photosynthétique dans \texttt{OPV} (durabilité \SI{>30}{\year}).
     \item \textbf{Réseaux intelligents agricoles.} Couplage modèles quantiques avec IoT, IA prédictive pour optimisation temps réel production énergie-alimentaire.
 \end{itemize}
 
@@ -619,23 +652,25 @@ Ce projet de thèse établit un nouveau paradigme pour l'ingénierie quantique d
 
 \appendix
 
-\section{Benchmarks : Méthodes Quantiques Comparées}
+\section{Benchmarks : Méthodes quantiques comparées}
 
 \begin{table}[h!]
 \centering
+\small
 \caption{Comparaison des performances des méthodes de simulation quantique.}
-\begin{tabular}{@{}lcccc@{}}
+\begin{tabular}{@{}p{0.25\textwidth}cccp{0.16\textwidth}@{}}
 \toprule
-\textbf{Méthode} & \textbf{Temps CPU (\si{\hour})} & \textbf{Mémoire (\si{\giga\byte})} & \textbf{Précision (\%)} & \textbf{Échelle (chromophores)} \\ \midrule
-\texttt{adHOPS} classique & 2.1 & 8.7 & 98.2 & N < \num{100} \\
-\texttt{HEOM} standard & 5.3 & 15.2 & 99.1 & N < \num{50} \\
-\textbf{Process Tensor-HOPS} & \textbf{1.3} & \textbf{5.1} & \textbf{98.8} & \textbf{N < \num{500}} \\
-\textbf{Stochastic Bundling} & \textbf{0.8} & \textbf{3.2} & \textbf{95.5} & \textbf{N > \num{1000}} \\
+\textbf{Méthode} & \textbf{Temps CPU (\si{\hour})} & \textbf{Mémoire (\si{\giga\byte})} & \textbf{Précision (\%)} & \textbf{Échelle (chromophores)} \\ 
+\midrule
+\texttt{adHOPS} classique & 2.1 & 8.7 & 98.2 & N \num{<100} \\
+\texttt{HEOM} standard & 5.3 & 15.2 & 99.1 & N \num{<50} \\
+\textbf{Process Tensor-HOPS} & \textbf{1.3} & \textbf{5.1} & \textbf{98.8} & \textbf{N \num{<500}} \\
+\textbf{Stochastic Bundling} & \textbf{0.8} & \textbf{3.2} & \textbf{95.5} & \textbf{N \num{>1000}} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\section{Architecture Détaillée AgroQuantPV Suite}
+\section{Architecture détaillée AgroQuantPV Suite}
 
 \subsection{Modules et APIs}
 
@@ -646,6 +681,7 @@ Ce projet de thèse établit un nouveau paradigme pour l'ingénierie quantique d
     \item \textbf{ClimateNexus API.} Interface pour la modélisation intégrée eau-énergie-aliment.
 \end{itemize}
 
+\newpage
 \bibliographystyle{unsrt}
 \bibliography{Ref_HOPS}
 

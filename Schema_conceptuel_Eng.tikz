@@ -1,0 +1,54 @@
+% Styles for the diagram
+\tikzstyle{block} = [rectangle, draw, fill=blue!20,
+    text width=11em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{io} = [rectangle, draw, fill=green!20,
+    text width=9em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{result} = [rectangle, draw, fill=orange!30,
+    text width=11em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+
+\begin{tikzpicture}[
+    node distance=1cm and 1.5cm,
+    auto,
+    every node/.style={align=center},
+    block/.append style={font=\footnotesize},
+    io/.append style={font=\footnotesize},
+    result/.append style={font=\footnotesize}
+]
+    % Node placement on a regular grid
+    \node [io] (inputs) {Input Data \\ (Spectra, Agronomic Data)};
+    \node [block, right=of inputs] (abinitio) {1. \textit{ab initio} calculations \\ (ORCA, CP2K)};
+    \node [block, right=of abinitio] (param) {2. Parameterization \\ Hamiltonian \& Bath};
+
+    \node [block, below=of inputs] (exp) {6. Experimental Validation};
+    \node [block, below=of abinitio] (obs) {4. Computation of Observables \\ (PCE, ETR, Spectra)};
+    \node [block, below=of param] (simu) {3. Quantum Dynamics Simulation \\ (Process Tensor-HOPS)};
+
+    \node [block, below=of obs] (ml) {5. AI-Based Screening \& Optimization};
+    \node [result, below=of ml] (design) {Outcome: Design of New Materials};
+
+    % Main workflow arrows
+    \path [line] (inputs) -- (abinitio);
+    \path [line] (abinitio) -- (param);
+    \path [line] (param) -- (simu);
+    \path [line] (simu) -- (obs);
+    \path [line] (obs) -- (ml);
+    \path [line] (ml) -- (design);
+
+    % Experimental validation loop
+    \path [line] (inputs.south) -- ++(0,-0.5cm) -| (exp.north);
+    \path [line] (obs.south west) -- ++(-0.5cm,0) |- (exp.south east);
+
+    % Feedback and optimization loops with curvature and labels
+    \path [line, dashed, thick, blue] (exp.north east)
+        edge[bend right=0] node[above, sloped, font=\footnotesize] {Refinement} (abinitio.south west);
+    \path [line, dashed, thick, red] (ml.east)
+        -- ++(1cm,0)
+        edge[bend left=0] node[above, sloped, font=\footnotesize] {Active Learning} (param.south west);
+    \path [line, dashed, thick, purple] (abinitio.south)
+        -- ++(0,-0.5cm)
+        edge[bend right=75] node[above, sloped, font=\footnotesize] {ML Descriptors} (ml.west);
+
+    % Optional global frame for clarity (if needed)
+%     \node[draw, dashed, fit=(inputs) (design), inner sep=1cm] {};
+\end{tikzpicture}
